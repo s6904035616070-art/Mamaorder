@@ -72,7 +72,14 @@ async function customerPage(){
   cat = cats[0];
 
   var top = el("div","top"); top.appendChild(el("h1",null,"ร้านมาม่า"));
-  top.appendChild(el("div","mute", table ? "โต๊ะ " + table : "ไม่พบเลขโต๊ะ"));
+  var sel = el("select");
+sel.style.cssText = "font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)";
+var ph = el("option", null, "เลือกโต๊ะ"); ph.value = ""; sel.appendChild(ph);
+for (var i = 1; i <= 20; i++) { var o = el("option", null, "โต๊ะ " + i); o.value = i; sel.appendChild(o); }
+if (table >= 1 && table <= 20) sel.value = table;
+sel.onchange = function(){ table = parseInt(sel.value, 10) || NaN; draw(); };
+top.appendChild(sel);
+
   var catsEl = el("div","cats"), menuEl = el("div"), note = el("textarea");
   note.rows = 2; note.placeholder = "หมายเหตุถึงครัว เช่น ไม่เผ็ด, เส้นนิ่ม";
   var msg = el("div");
